@@ -1,0 +1,273 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(-45deg, #26547c 0%, #06d6a0 100%);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: "Poppins";
+  background-position: center;
+  background-size: cover;
+  backdrop-filter: blur(2px);
+}
+
+.appbar {
+  height: 80px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.appbar .logo-group {
+  align-self: flex-start;
+  margin-left: 15px;
+}
+
+.appbar .logo-group a{
+  text-decoration: none;
+}
+
+.appbar .logo-group img {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+.appbar .input-group {
+  position: absolute;
+  align-self: flex-end;
+  margin-right: 25px;
+}
+
+.appbar .input-group .search {
+  height: 15px;
+  width: 15px;
+  background-color: #fff;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  color: #fff;
+  outline: none;
+  padding: 5px;
+  position: relative;
+  transition: all 150ms cubic-bezier(0.2, 0.6, 0.252, 1.2);
+  font-size: 18px;
+}
+
+.appbar .input-group .search ~ .bar {
+  height: 4px;
+  width: 15px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
+  position: absolute;
+  display: block;
+  opacity: 1;
+  right: -9px;
+  top: 24px;
+  transform: rotate(45deg);
+  transition: opacity 150ms ease;
+}
+
+.appbar .input-group .search::-moz-placeholder {
+  color: #fff;
+}
+
+.appbar .input-group .search:-ms-input-placeholder {
+  color: #fff;
+}
+
+.appbar .input-group .search::placeholder {
+  color: #fff;
+  font-size: 18px;
+}
+
+.appbar .input-group .search:focus {
+  height: 35px;
+  width: calc(100vw - 90px);
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  color: #26547c;
+  cursor: initial;
+  padding: 5px 20px;
+}
+
+.appbar .input-group .search:focus::-moz-placeholder {
+  color: #a1a1a1;
+}
+
+.appbar .input-group .search:focus:-ms-input-placeholder {
+  color: #a1a1a1;
+}
+
+.appbar .input-group .search:focus::placeholder {
+  color: #a1a1a1;
+}
+
+.appbar .input-group .search:focus ~ .bar {
+  box-shadow: none;
+  opacity: 0;
+  right: 0;
+  top: 5px;
+}
+
+.main {
+  height: calc(100vh - 80px);
+  width: 100vw;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+.main p {
+  color: #fff;
+  font-size: 18px;
+}
+
+.main .content{
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .main .content h1 , h2{
+    color: white;
+    font-weight: 600;
+    font-size: 28px;
+  }
+  
+  .main .content .contentright h1{
+    font-weight: 800;
+    font-size: 58px;
+  }
+
+  .main .suninfo {
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.233);
+    margin-bottom: 10px;
+  }
+
+  .main .suninfo img , .windinfo img{
+    width: 70px;
+    height: 70px;
+  }
+
+  .main .windinfo{
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.233);
+    margin-bottom: 10px;
+  }
+
+  .main .windinfo > div , .suninfo > div , .tomorrowinfo > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .main .tomorrowinfo{
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.233);
+    margin-bottom: 10px;
+  }
+
+  .main .tomorrowinfo .yesterday {
+    width: 50%;
+    border-right: 0.2px solid white;
+  }
+
+  .main .tomorrowinfo .tomorrow{
+    width: 50%;
+    border-left: 0.2px solid white;
+  }
+
+  .main .dev{
+    text-align: center;
+    position: absolute;
+    bottom: 30px;
+    width: calc(100% - 40px);
+  }
+
+  .main .dev a{
+    text-decoration: none;
+    color: rgb(255, 0, 0);
+  }
+
+  .main .addtohome{
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.233);
+    margin-bottom: 10px;
+  }
+
+  .main .addtohome img{
+    width: 70px;
+    height: 70px;
+  }
+
+  .main .addtohome .add{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .alert {
+    width: calc(100% - 40px);
+    height: fit-content;
+    padding: 5px 8px;
+    border-radius: 10px;
+    transition: opacity 1s ease;
+    opacity: 0;
+    position: absolute;
+  }
+  .alert p{
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+  }
+  .alertnow {
+    opacity: 1;
+  }

@@ -1,0 +1,139 @@
+{% load static %}
+{% include 'base.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block container %}
+
+<div class="appbar">
+    <div class="logo-group">
+        <img src="{% static 'images/weather-icon.svg' %}" alt="">
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert">
+            <p id="alert-text">{{ message }}</p>
+        </div>
+        {% endfor %}
+
+        <script>  
+            function wait(ms) {
+            return new Promise((resolve) => setTimeout(resolve, ms));
+            }
+            document.querySelector(".alert").classList.toggle("alertnow");
+            wait(3000).then(() => {
+                document.querySelector(".alert").classList.toggle("alertnow");
+                document.querySelector("#alert-text").textContent = "";
+            });
+        </script>
+    {% endif %}
+
+    <div class="input-group">
+        <form method="post" action="{% url 'city' %}">
+            {% csrf_token %}
+            <input class="search" type="text" placeholder="City" name="city" /><span class="bar"></span>
+        </form>
+    </div>
+</div>
+
+<div class="main">
+    <p>My Location</p>
+    <div class="weathercards">
+        <a href="{% url 'weather' region %}">
+            <div class="card mylocation">
+                <div class="content">
+                    <div class="contentleft">
+                        <h2>{{region}}</h2>
+                        <p>{{condition}}</p>
+                    </div>
+                    <div class="contentright">
+                        <h1>{{temp}}<sup>o</sup></h1>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="recent" style="display: none;">
+        <p style='width:100%;display:flex;justify-content:space-between;'><span>Recent Locations</span> <span onclick='clearrecent()'>Clear</span></p>
+        <div class='weathercards recentcards'></div>
+    </div>
+</div>
+
+<script>
+    const mybody = document.querySelector("body");
+    var myDate = new Date();
+    var hrs = myDate.getHours();
+
+    if (hrs < 4)
+    mybody.style = `background:url('{%static "images/moon.png" %}'); background-size: cover`;
+    else if (hrs < 12)
+    mybody.style = `background:url('{%static "images/morning.jpg" %}'); background-size: cover`;
+    else if (hrs >= 12 && hrs <= 17)
+    mybody.style = `background:url('{%static "images/morning.jpg" %}'); background-size: cover`;
+    else if (hrs >= 17 && hrs <= 24)
+    mybody.style = `background:url('{%static "images/night.png" %}'); background-size: cover`;
+
+    const mylocation = document.querySelector(".mylocation");
+    {% if condition == 'Hot' %}
+    mylocation.style = `background: url('{%static "images/hot.gif" %}');background-position: top right;`;
+    {% elif condition == 'Rainy' %}
+    mylocation.style = `background: url('{%static "images/rainy.gif" %}');background-position: bottom;background-size: cover;`;
+    {% else %}
+    mylocation.style = `background: url('{%static "images/normal.gif" %}');background-position: top;background-size: cover;`;
+    {% endif %}
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+     if(! localStorage.getItem('citylist')){
+        localStorage.setItem('citylist',JSON.stringify([]));
+    }
+
+    const recent = document.querySelector('.recent'),
+    recentcards = document.querySelector('.recentcards');
+    var citylist = [];
+    try{
+        citylist = JSON.parse(localStorage.getItem('citylist'));
+        if(citylist.length > 0){
+            recent.style.display = "block";
+            if(citylist.length > 0){
+                for(var i=0; i < citylist.length; i++){
+                    if (citylist[i]['city'].includes('{{city}}')) {
+                        var city = citylist[i];
+                        if(city['city'].toLowerCase() != '{{region}}'.toLowerCase()){ 
+                            var div = `<a href="{% url 'weather' 'city' %}" class="${city['city'].toLowerCase()}">
+                                        <div class="card">
+                                            <div class="content">
+                                                <div class="contentleft">
+                                                    <h2>${city['city']}</h2>
+                                                    <p>${city['condition']}</p>
+                                                </div>
+                                                <div class="contentright">
+                                                    <h1>${city['temp']}<sup>o</sup></h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </a>`;
+                            recentcards.innerHTML += div;
+                            var a = document.querySelector("."+city['city'].toLowerCase()+"")
+                            var href = a.href.replace('city',city['city']);
+                            a.href = href;
+                        }
+                    }
+                }
+            }
+        }
+    }catch{}
+
+    function clearrecent(){
+        localStorage.removeItem('citylist');
+        recent.style.display = "none";
+        recent.innerHTML = "";
+    }
+</script>
+
+{% endblock %}

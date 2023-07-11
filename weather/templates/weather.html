@@ -1,0 +1,154 @@
+{% load static %}
+{% include 'base.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/weather.css' %}">
+<style>
+    body{
+        {% if condition == 'Hot' %}
+            background: url('{%static "images/hot.gif" %}');
+        {% elif condition == 'Rainy' %}
+            background: url('{%static "images/rainy.gif" %}');
+        {% else %}
+            background: url('{%static "images/normal.gif" %}');
+        {% endif %}
+        background-size: cover;
+    }
+</style>
+{% endblock %}
+
+{% block container %}
+
+<div class="appbar">
+    <div class="logo-group">
+        <a href="{% url 'home' %}"><img src="{% static 'images/icons8-back-100.png' %}" alt=""></a>
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert">
+            <p id="alert-text">{{ message }}</p>
+        </div>
+        {% endfor %}
+
+        <script>  
+            function wait(ms) {
+            return new Promise((resolve) => setTimeout(resolve, ms));
+            }
+            document.querySelector(".alert").classList.toggle("alertnow");
+            wait(3000).then(() => {
+                document.querySelector(".alert").classList.toggle("alertnow");
+                document.querySelector("#alert-text").textContent = "";
+            });
+        </script>
+    {% endif %}
+    <div class="input-group">
+        <form method="post" action="{% url 'city' %}">
+            {% csrf_token %}
+            <input class="search" type="text" placeholder="City" name="city" /><span class="bar"></span>
+        </form>
+    </div>
+</div>
+
+<div class="main">
+
+    <div class="content">
+        <div class="contentleft">
+            <h2>{{city}}</h2>
+            <p>{{condition}}</p>
+        </div>
+        <div class="contentright">
+            <h1>{{temp}}<sup>o</sup></h1>
+        </div>
+    </div>
+
+    <div class="windinfo">
+        <div class="humidity">
+            <img src=" {% static 'images/humidity.svg' %}" alt="Humidity">
+            <p>Humidity</p>
+            <p>{{humidity}}</p>
+        </div>
+        <div class="windspeed">
+            <img src="{% static 'images/icons8-windy-weather-96.png' %}" alt="Wind Speed">
+            <p>Windspeed</p>
+            <p>{{wind_speed}}</p>
+        </div>
+    </div>
+
+    <div class="suninfo">
+        <div class="sunrise">
+            <img src="{% static 'images/icons8-sunrise-96.png' %}" alt="Sunrise">
+            <p>Sunrise</p>
+            <p>{{sunrise}}</p>
+        </div>
+        <div class="sunrise">
+            <img src="{% static 'images/icons8-sunset-96.png' %}" alt="Sunset">
+            <p>Sunset</p>
+            <p>{{sunset}}</p>
+        </div>
+    </div>
+
+    <div class="tomorrowinfo">
+        <div class="yesterday">
+            <p>Yesterday</p>
+            <p>{{yesterday}} &deg;</p>
+        </div>
+        <div class="tomorrow">
+            <p>Tomorrow</p>
+            <p>{{tomorrow}} &deg;</p>
+        </div>
+    </div>
+    
+    <div class="addtohome">
+        <div class="add">
+            <img src=" {% static 'images/add.png' %}" alt="Add">
+            <p>Add to recent</p>
+        </div>
+    </div>
+
+    <p class="dev">Developed by <a href="https://krdeveloper.web.app/">KR</a></p>
+</div>
+
+<script>
+
+    if(! localStorage.getItem('citylist')){
+        localStorage.setItem('citylist',JSON.stringify([]));
+    }
+
+    var addbtn = document.querySelector(".addtohome");
+    var citylist = JSON.parse(localStorage.getItem('citylist'));
+
+    if ("{{city}}".toLowerCase() == "{{region}}".toLowerCase()) {
+        addbtn.style.display = "none";
+    }
+
+    if(citylist.length > 0){
+        for(var i=0; i < citylist.length; i++){
+            if (citylist[i]['city'].includes('{{city}}')) {
+                addbtn.style.display = "none";
+                break;
+            }
+        }
+    }
+        
+    addbtn.addEventListener('click', () => {
+        var citylist = JSON.parse(localStorage.getItem('citylist'));
+        try {
+            var counter = 0;
+            for(var i=0; i < citylist.length; i++){
+                if (citylist[i]['city'].includes('{{city}}')) {
+                    counter++;
+                    break;
+                }
+            }
+            if(counter==0){
+                addbtn.style.display = "none";
+                citylist.push({ city: '{{city}}' , condition : '{{condition}}', temp: {{temp}} });
+                localStorage.setItem('citylist', JSON.stringify(citylist));
+            }
+        }catch {}
+        
+        addbtn.style.display = "none";
+    })
+</script>
+
+{% endblock %}

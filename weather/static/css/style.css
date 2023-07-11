@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(-45deg, #26547c 0%, #06d6a0 100%);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'Poppins';
+  background-position: center;
+  background-size: cover;
+}
+
+.appbar {
+  height: 80px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.appbar .logo-group{
+  align-self: flex-start;
+  margin-left: 25px;
+}
+.appbar .logo-group img{
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+}
+
+.appbar .input-group {
+  position: absolute;
+  align-self: flex-end;
+  margin-right: 25px;
+}
+
+.appbar .input-group .search {
+  height: 15px;
+  width: 15px;
+  background-color: #fff;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  color: #fff;
+  outline: none;
+  padding: 5px;
+  position: relative;
+  transition: all 150ms cubic-bezier(0.2, 0.6, 0.252, 1.2);
+  font-size: 18px;
+  
+}
+
+.appbar .input-group .search~.bar {
+  height: 4px;
+  width: 15px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
+  position: absolute;
+  display: block;
+  opacity: 1;
+  right: -9px;
+  top: 24px;
+  transform: rotate(45deg);
+  transition: opacity 150ms ease;
+}
+
+.appbar .input-group .search::-moz-placeholder {
+  color: #fff;
+}
+
+.appbar .input-group .search:-ms-input-placeholder {
+  color: #fff;
+}
+
+.appbar .input-group .search::placeholder {
+  color: #fff;
+  font-size: 18px;
+}
+
+.appbar .input-group .search:focus {
+  height: 35px;
+  width: calc(100vw - 90px);
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  color: #26547c;
+  cursor: initial;
+  padding: 5px 20px;
+}
+
+.appbar .input-group .search:focus::-moz-placeholder {
+  color: #a1a1a1;
+}
+
+.appbar .input-group .search:focus:-ms-input-placeholder {
+  color: #a1a1a1;
+}
+
+.appbar .input-group .search:focus::placeholder {
+  color: #a1a1a1;
+}
+
+.appbar .input-group .search:focus~.bar {
+  box-shadow: none;
+  opacity: 0;
+  right: 0;
+  top: 5px;
+}
+
+
+.main{
+  height: calc(100vh - 80px);
+  width: 100vw;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+.main p{
+  color: #fff;
+  font-size: 18px;
+}
+
+.main .weathercards{
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 0;
+  gap: 12px;
+}
+
+
+.main .weathercards a{
+  text-decoration: none;
+  width: 100%;
+  height: 150px;
+  position: relative;
+  cursor:default;
+}
+
+.main .weathercards a .card{
+  width: 100%;
+  height: 150px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.288);
+  position: relative;
+}
+
+.main .weathercards a .card .content{
+  width: 100%;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  box-sizing: border-box;
+}
+
+.main .weathercards a .card .content h1 , h2{
+  color: white;
+}
+
+.main .weathercards a .card .content .contentright h1{
+  font-weight: 600;
+  font-size: 50px;
+}
+
+.alert {
+  width: calc(100% - 40px);
+  height: fit-content;
+  padding: 5px 8px;
+  border-radius: 10px;
+  transition: opacity 1s ease;
+  opacity: 0;
+  position: absolute;
+}
+.alert p{
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+}
+.alertnow {
+  opacity: 1;
+}
