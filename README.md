@@ -5,7 +5,7 @@ API Weather App: Forecast at Your Fingertips
 
 ## 🚀 Demo
 
-[ZeroWeather](https://zeroweather.pythonanywhere.com)
+[WeatherAPI](https://zeroweather.pythonanywhere.com)
 
 
 ## 💻 Run Locally
